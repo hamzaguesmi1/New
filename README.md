@@ -1,6 +1,18 @@
-# Data Engineering Project Template
+# F&E DATA ENGINEERING PROJECT
 
-This is a template you can use for your next data engineering portfolio project. To copy it, log into GitHub and click on the **Use this template** button above.
+3.1	Introduction
+
+Application architecture refers to the design and structure the FE Project. It defines how the different components of the application interact with each other, how data flows between them, and how they collectively fulfill the application’s functional and non-functional requirements.
+
+3.2	Solution Overview:
+This document presents the solution architecture for the data analytics project serving the Fertility and Endo department. The aim is to provide valuable insights on medications and enable better business/client decisions.
+
+3.3	Application Layers:
+The solution is designed as a data value chain, starting with dataset ingestion, followed by data processing and storage. Downstream, data visualization is implemented to offer UpToDate, consistent, and reliable data visualization for end-users.
+
+Application Architecture Figure
+![Image](https://github.com/user-attachments/assets/70304476-b5be-4854-bd78-9840a3685f20)
+
  
 ![GitHub use this template button](use-this-template-button.png)
 
@@ -14,7 +26,7 @@ Here you want to write a short overview of the goals of your project and how it 
 
 ### Data Architecture
 
-![Example architecture image](example-architecture.png)
+![Image](https://github.com/user-attachments/assets/0b65f1b7-d116-4b40-b20c-a60f575903f2)
 
 If you decide to include this, you should also talk a bit about why you chose the architecture and tools you did for this project.
 
