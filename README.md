@@ -71,7 +71,7 @@ This document presents the solution architecture for the data analytics project 
 3.3	Application Layers:
 The solution is designed as a data value chain, starting with dataset ingestion, followed by data processing and storage. Downstream, data visualization is implemented to offer UpToDate, consistent, and reliable data visualization for end-users.
 
-                                                Application Architecture Figure
+                                                Application Architecture
 ![Image](https://github.com/user-attachments/assets/70304476-b5be-4854-bd78-9840a3685f20)
 
  
@@ -79,15 +79,42 @@ The solution is designed as a data value chain, starting with dataset ingestion,
 
 The IBOND application layer is a data retrieval system built in the AWS Cloud architecture. It retrieves specific defined objects from Salesforce directly, allowing easy access and data manipulation on the cloud layer. The FE project utilizes this pre-built system to integrate existing data and load it into AWS Redshift for later binding with other FE patient data sets.
 
-## Overview
+                                                IBOND Application Layer
+![Image](https://github.com/user-attachments/assets/0b65f1b7-d116-4b40-b20c-a60f575903f2)
 
-Here you want to write a short overview of the goals of your project and how it works at a high level. If possible, include one or two images of the end product and architecture diagram (see examples below). diagrams.net is a great tool for creating architecture diagrams.
+5 INTEGRATION ARCHITECTURE 
 
-### Data Visualization
+The integration architecture phase is a critical step in the IT project lifecycle, focusing on designing a cohesive framework to integrate systems, applications, and data sources. The goal is to enable seamless communication, data exchange, and interoperability across disparate systems.
 
-![Example dashboard image](example-dashboard.png)
+For data ingestion, the project adopts the ETL (Extract, Transform, Load) architecture pattern, with three defined ETL workflows:
 
-### Data Architecture
+Advanced ETL:
+Validates files, converts XLS to CSV, extracts and transforms data, and loads it into the Redshift staging area and multidimensional model.
+
+Intermediary ETL:
+Validates files, extracts data from CSV, and loads it into the Redshift staging area and multidimensional model.
+
+Basic ETL:
+Validates files and extracts data from CSV, loading it into the Redshift staging area.
+
+This structured approach ensures efficient data integration, supporting the project's goal of delivering actionable insights through a unified data pipeline.
+
+### ADVANCED ETL 
+
+This pattern involves file validation, converting files from XLS to CSV format, extracting data from CSV files, transforming it, loading it into the Redshift staging area, and finally loading it into the Redshift multidimensional model.
+
+  <img width="610" alt="Image" src="https://github.com/user-attachments/assets/48cf8a25-96f5-4679-8602-28e079e3e380" />
+
+## Intermediary ETL 
+
+In the Intermediary ETL pattern, we perform file validation, extract data from CSV files, load it into the Redshift staging area, and then load it into the Redshift multidimensional model.
+
+<img width="610" alt="Image" src="https://github.com/user-attachments/assets/a39603be-9cad-4ef1-b040-16bc0959a0af" />
+
+### Basic ETL
+In the Basic ETL pattern, we conduct file validation, extract data from CSV files, and load it into the Redshift staging area.
+In the Basic ETL pattern, we conduct file validation, extract data from CSV files, and load it into the Redshift staging area.![image](https://github.com/user-attachments/assets/caa1f5a4-e4b1-4eb7-bffa-fece697a93e7)
+
 
 ![Image](https://github.com/user-attachments/assets/0b65f1b7-d116-4b40-b20c-a60f575903f2)
 
