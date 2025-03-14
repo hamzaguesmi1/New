@@ -1,7 +1,7 @@
 # Data Engineering Project Template
 
 This is a template you can use for your next data engineering portfolio project. To copy it, log into GitHub and click on the **Use this template** button above.
-
+ 
 ![GitHub use this template button](use-this-template-button.png)
 
 ## Overview
@@ -12,10 +12,9 @@ Here you want to write a short overview of the goals of your project and how it 
 
 ![Example dashboard image](example-dashboard.png)
 
-### IBOND Application Layer![image](https://github.com/user-attachments/assets/944277ad-f9c2-499e-8224-8b697be31aab)
+### Data Architecture
 
-
-![Example architecture image]([example-architecture.png](https://github.com/hamzaguesmi1/New/issues/1#issue-2921331298))
+![Example architecture image](example-architecture.png)
 
 If you decide to include this, you should also talk a bit about why you chose the architecture and tools you did for this project.
 
