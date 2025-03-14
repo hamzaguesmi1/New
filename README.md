@@ -1,6 +1,105 @@
 # F&E DATA ENGINEERING PROJECT
 
 3.1	Introduction
+This project involves building a scalable data pipeline to support a commercial dashboard for a pharmaceutical company's Neurology and Immunology (NI) business. The data engineering tasks include:
+
+Data Ingestion: Collect data from sources like IQVIA RxDynamics, SAP, and Salesforce, and store it in AWS S3.
+
+Data Processing: Use AWS Glue and AWS Lambda for ETL processes, including file validation, transformation, and loading into AWS Redshift.
+
+Data Storage: Build a data warehouse on Redshift using a Star Schema for efficient querying and reporting.
+
+Data Integration: Combine data from multiple sources into a unified format for analysis.
+
+Data Quality: Implement validation checks and monitor data quality using AWS CloudWatch.
+
+Automation: Automate ETL pipelines with event-driven triggers and scheduling.
+
+Accessibility: Connect processed data to Tableau for dashboard creation and ensure role-based access control (RBAC).
+
+Scalability: Design a serverless, scalable architecture using AWS services.
+
+Security: Encrypt data, manage access with AWS IAM, and ensure compliance with regulations.
+
+Monitoring: Use CloudWatch for pipeline performance tracking and issue resolution.
+
+The outcome is a robust data infrastructure that enables real-time insights, supports 15 Tableau dashboards, and drives data-driven decision-making for the pharmaceutical company.
+
+**AWS Services Used in the Project** :
+
+1. Data Storage
+AWS S3 (Simple Storage Service):
+
+Used for storing raw and processed data files (e.g., CSV, XLS).
+
+Acts as a data lake for archival and backup purposes.
+
+2. Data Processing
+AWS Glue:
+
+Fully managed ETL service for data extraction, transformation, and loading.
+
+Handles file validation, format conversion (e.g., XLS to CSV), and data cataloging.
+
+AWS Lambda:
+
+Serverless compute service for event-driven data processing.
+
+Triggers ETL jobs and performs lightweight transformations.
+
+3. Data Warehousing
+AWS Redshift:
+
+Fully managed data warehouse for storing and querying structured data.
+
+Supports the Star Schema for efficient analytics and reporting.
+
+4. Monitoring and Logging
+AWS CloudWatch:
+
+Monitors ETL jobs, Lambda functions, and Redshift performance.
+
+Provides alerts for failures or performance bottlenecks.
+
+5. Security and Access Management
+AWS IAM (Identity and Access Management):
+
+Manages user permissions and role-based access control (RBAC).
+
+Ensures secure access to AWS resources.
+
+AWS KMS (Key Management Service):
+
+Used for encrypting data at rest and in transit.
+
+6. Infrastructure as Code (IaC)
+Terraform:
+
+Deploys and manages AWS infrastructure (e.g., S3 buckets, Glue jobs, Redshift clusters).
+
+Ensures repeatable and version-controlled infrastructure setup.
+
+7. Data Visualization Integration
+Tableau:
+
+Connected to AWS Redshift for creating interactive dashboards.
+
+Publishes dashboards on the Tableau Server for stakeholder access.
+
+Summary of AWS Services
+Data Storage: AWS S3
+
+Data Processing: AWS Glue, AWS Lambda
+
+Data Warehousing: AWS Redshift
+
+Monitoring: AWS CloudWatch
+
+Security: AWS IAM, AWS KMS
+
+Infrastructure as Code: Terraform
+
+Visualization: Tableau (integrated with AWS Redshift)
 
 Application architecture refers to the design and structure the FE Project. It defines how the different components of the application interact with each other, how data flows between them, and how they collectively fulfill the application’s functional and non-functional requirements.
 
