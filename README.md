@@ -138,7 +138,7 @@ The data modeling phase is crucial in the software development life cycle, speci
 The output of the data modeling phase is a well-defined and documented data model serving as a blueprint for efficient database design and maintenance throughout the FE project lifecycle.
 
                                                         Logical Data Modeling
-
+ 
 <img width="711" alt="Image" src="https://github.com/user-attachments/assets/f48770f7-b784-4270-be50-4320186b2683" />
 
 **Conclusion
