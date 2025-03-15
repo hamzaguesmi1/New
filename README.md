@@ -154,3 +154,157 @@ In summary, the data architecture phase focuses on designing the structure, orga
 Infrastructure architecture involves designing and planning the technology infrastructure that supports an organization's IT systems and operations. It entails creating a blueprint for the hardware, software, networks, storage, and other components needed to build a strong and scalable IT infrastructure.
 
 <img width="747" alt="Image" src="https://github.com/user-attachments/assets/a7871b70-52f4-44b7-b7af-cafd71b1551b" />
+
+First script to consume data from sharepoint file
+1. Key Functionality
+The script performs the following tasks:
+1. Authenticate with SharePoint:
+    * Retrieves an access token using OAuth 2.0 client credentials flow.
+    * Uses the access token to interact with the SharePoint REST API.
+2. Retrieve Files from SharePoint:
+    * Lists all files in a specified SharePoint folder (pickup_folder_path).
+3. Download and Upload Files:
+    * Downloads each file from the SharePoint folder.
+    * Uploads the downloaded file to a specified Amazon S3 bucket (trg_bucket).
+4. Archive Files in SharePoint:
+    * Moves each file from the pickup folder to an archive folder in SharePoint.
+    * The archive folder path includes the current date to organize archived files.
+5. Error Handling:
+    * Handles errors during authentication, file retrieval, download, upload, and archiving.
+    * Logs errors and returns appropriate status codes.
+  
+6. Code Snippet :
+
+
+     Client Sharepoint Preprod env
+
+
+import json
+import requests
+import boto3
+import logging
+import os
+from dotenv import load_dotenv
+from datetime import datetime
+from awsglue.utils import getResolvedOptions
+import sys
+
+
+def sharepoint_function():
+    
+    today_date = datetime.today().strftime('%Y-%m-%d')
+    logger = logging.getLogger() 
+    logger.setLevel(logging.INFO)
+    args = getResolvedOptions(sys.argv,
+                    ["trg_bucket", "TenantName", "SiteName", "TenantID" , "ApplicationID","pickup_folder_path","archive"])
+                    
+    secrets = boto3.client("secretsmanager")
+    trg_bucket = str(args['trg_bucket']) # pickup bucket
+    s3 = boto3.resource('s3')       
+    s3_client = boto3.client('s3') # initializing s3 client
+    bucket = s3.Bucket(trg_bucket) # initializing trg_bucket
+    
+    # get sharepoint credentials from secrets
+    sharepoint_creds = json.loads(secrets.get_secret_value(SecretId='emd-client_sharepoint_secrets')['SecretString'])
+    ClientID = sharepoint_creds.get('ClientID')
+    ClientSecret = sharepoint_creds.get('ClientSecret')
+    
+    # Default lifespan of the access token is 60-90 minutes (75 minutes on average)
+    
+    TenantName = str(args['TenantName'])
+    SiteName = str(args['SiteName'])
+    TenantID = str(args['TenantID'])
+    ApplicationID = str(args['ApplicationID'])
+    pickup_folder_path = str(args['pickup_folder_path'])
+    archive = str(args['archive'])
+
+    try : 
+        #Get Access Token
+        url = f"https://accounts.accesscontrol.windows.net/{TenantID}/tokens/OAuth/2"
+        #Body
+        payload={'grant_type' : 'client_credentials',
+           'resource' : f'{ApplicationID}/{TenantName}.sharepoint.com@{TenantID}',
+           'client_id' : f'{ClientID}@{TenantID}',
+           'client_secret' : ClientSecret
+        }
+        response = requests.request("POST", url, data=payload)
+        response = response.json()
+        AccessToken = response['access_token']
+    
+        
+        #Get files url
+        paths=[]
+        url = f"https://{TenantName}.sharepoint.com/sites/{SiteName}/_api/web/GetFolderByServerRelativeUrl('{pickup_folder_path}')/Files"
+    
+        headers = {
+        'Authorization': f'Bearer {AccessToken}',
+        'Accept': 'application/json;odata=verbose'
+        }
+        
+        response = requests.request("GET", url, headers=headers)
+        response=response.json()
+    
+        
+        paths=[iterator['ServerRelativeUrl'] for iterator in response['d']['results'] ]
+        logger.info(json.dumps(paths))
+        # case1: the pickup folder is empty
+        if(len(paths)==0) :
+            return {
+                'statusCode': 200,
+                'body': json.dumps('Pickup Folder is Empty!')
+            }
+        # case2 : the pickup folder is not empty
+        else :
+            # Get files Content
+            for path in paths : 
+                url = f"https://{TenantName}.sharepoint.com/sites/{SiteName}/_api/web/GetFileByServerRelativeUrl('{path}')/$value"
+                headers = {
+                'Authorization': f'Bearer {AccessToken}',
+                'Accept': 'application/json;odata=verbose'
+                }
+                
+                response = requests.request("GET", url, headers=headers)
+                
+                file_extension = path.split('.')[-1]
+                file_name = path.split('/')[-1]
+            
+            
+                #Save file 
+                upload_file_path = f'/tmp/hold.{file_extension}'
+                with open(file=upload_file_path, mode='wb') as file: 
+                    file.write(response.content)
+                
+                #Upload file to pickup bucket
+                try : 
+                    bucket.upload_file(upload_file_path,file_name)
+                except : 
+                    return {
+                        'statusCode': 200,
+                        'body': json.dumps(f'Issue in S3 Bucket!, {file_name} not inserted !')
+                    }
+                
+                
+                #Move file to archive
+                archives=f'{archive}{today_date}_{file_name}'
+                
+                url = f"https://{TenantName}.sharepoint.com/sites/{SiteName}/_api/web/GetFileByServerRelativeUrl('{path}')/moveto(newurl='{archives}',flags=1)"
+                print(url)
+                headers = {
+                'Authorization': f'Bearer {AccessToken}',
+                'Accept': 'application/json; odata=verbose'
+                }
+                response = requests.request("POST", url, headers=headers)
+    except : 
+        return {
+            'statusCode': 200,
+            'body': json.dumps('Issue is SharePoint API!')
+        }
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps('File inserted successfully!')
+      }
+print(sharepoint_function())
+
+
+
