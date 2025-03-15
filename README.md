@@ -82,7 +82,7 @@ The IBOND application layer is a data retrieval system built in the AWS Cloud ar
                                                 IBOND Application Layer
 ![Image](https://github.com/user-attachments/assets/0b65f1b7-d116-4b40-b20c-a60f575903f2)
 
-5 INTEGRATION ARCHITECTURE 
+4 INTEGRATION ARCHITECTURE 
 
 The integration architecture phase is a critical step in the IT project lifecycle, focusing on designing a cohesive framework to integrate systems, applications, and data sources. The goal is to enable seamless communication, data exchange, and interoperability across disparate systems.
 
@@ -109,38 +109,48 @@ This pattern involves file validation, converting files from XLS to CSV format, 
 
 In the Intermediary ETL pattern, we perform file validation, extract data from CSV files, load it into the Redshift staging area, and then load it into the Redshift multidimensional model.
 
-<img width="610" alt="Image" src="https://github.com/user-attachments/assets/a39603be-9cad-4ef1-b040-16bc0959a0af" />
+<img width="638" alt="Image" src="https://github.com/user-attachments/assets/4bb8a1ef-449d-47ea-b2df-ef5fc003156f" />
 
-### Basic ETL
-In the Basic ETL pattern, we conduct file validation, extract data from CSV files, and load it into the Redshift staging area.
-In the Basic ETL pattern, we conduct file validation, extract data from CSV files, and load it into the Redshift staging area.![image](https://github.com/user-attachments/assets/caa1f5a4-e4b1-4eb7-bffa-fece697a93e7)
+5	 Patterns (Solution Architecture Attributes):
+
+   Star Schema The solution will adopt the Star schema for the data architecture of the data warehouse. 
+The Star schema is a data modeling technique used in data warehousing and business intelligence (BI) systems. It has a simple and intuitive structure that resembles a star shape when visualized. In the Star schema, the central entity known as the "fact table" contains the primary measures or metrics of interest, such as sales revenue or product quantities. 
+
+The fact table is surrounded by multiple related dimension tables, providing descriptive attributes about the measures. Key characteristics of the Star schema:
+
+Fact Table: Holds numerical or quantitative data representing business metrics and contains foreign keys for establishing relationships with dimension tables. 
+
+Dimension Tables: Provide descriptive attributes associated with the measures in the fact table, such as time, geography, product, customer, etc., and contain primary keys connecting to the fact table. 
+
+Denormalized Structure: Star schemas are denormalized, simplifying query processing and improving performance for reporting and analysis tasks. 	One-to-Many Relationships: Relationships between the fact table and dimension tables are typically one-to-many.
+
+Simplicity and Performance: The star schema offers simplicity and ease of use for data analysis, with efficient queries due to the flat structure and reduced joins. The Star schema design facilitates efficient querying and reporting for BI and analytical purposes, allowing users to navigate and analyze data along different dimensions intuitively.
 
 
-![Image](https://github.com/user-attachments/assets/0b65f1b7-d116-4b40-b20c-a60f575903f2)
+The data modeling phase is crucial in the software development life cycle, specifically in database design. It involves creating a conceptual representation of the data to be stored and managed. Key aspects of the data modeling phase for the NI Project include:
 
-If you decide to include this, you should also talk a bit about why you chose the architecture and tools you did for this project.
+1.	Conceptual Data Model: Focuses on business requirements and high-level data entities using Entity-Relationship (ER) diagrams.
+2.	Logical Data Model: Refines the conceptual model into a detailed structure independent of specific technology.
+3.	Normalization: Eliminates data redundancy and improves data integrity through normalization.
+4.	Physical Data Model: Transforms the logical model into a specific structure for the target database management system (DBMS).
+5.	Data Modeling Tool: Utilizes specialized software tools like Oracle SQL Developer for creating, visualizing, and managing data models.
 
-## Prerequisites
+The output of the data modeling phase is a well-defined and documented data model serving as a blueprint for efficient database design and maintenance throughout the FE project lifecycle.
 
-Directions or anything needed before running the project.
+                                                        Logical Data Modeling
 
-- Prerequisite 1
-- Prerequisite 2
-- Prerequisite 3
+<img width="711" alt="Image" src="https://github.com/user-attachments/assets/f48770f7-b784-4270-be50-4320186b2683" />
 
-## How to Run This Project
+**Conclusion
+**
+In summary, the data architecture phase focuses on designing the structure, organization, storage, and management of data assets within an organization. It ensures that data is efficiently collected, stored, integrated, secured, and governed to support business objectives and enable effective data-driven decision-making.
 
-Replace the example step-by-step instructions with your own.
 
-1. Install x packages
-2. Run command: `python x`
-3. Make sure it's running properly by checking z
-4. To clean up at the end, run script: `python cleanup.py`
 
-## Lessons Learned
 
-It's good to reflect on what you learned throughout the process of building this project. Here you might discuss what you would have done differently if you had more time/money/data. Did you end up choosing the right tools or would you try something else next time?
 
-## Contact
+## Prerequisites and technology capacity specs
 
-Please feel free to contact me if you have any questions at: LinkedIn, Twitter
+Infrastructure architecture involves designing and planning the technology infrastructure that supports an organization's IT systems and operations. It entails creating a blueprint for the hardware, software, networks, storage, and other components needed to build a strong and scalable IT infrastructure.
+
+<img width="747" alt="Image" src="https://github.com/user-attachments/assets/a7871b70-52f4-44b7-b7af-cafd71b1551b" />
